@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "name": "ktracker-app",
+    "slug": "ktracker-app",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1f467638-00b7-4418-95ae-13080fb2da07"
+      }
+    },
+    "android": {
+      "package": "com.aswin5.ktrackerapp"
+    }
+  }
+}
