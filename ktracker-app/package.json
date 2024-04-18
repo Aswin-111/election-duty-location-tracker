@@ -30,7 +30,8 @@
     "react-native-screens": "~3.29.0",
     "react-native-web": "~0.19.6",
     "tailwindcss": "3.3.2",
-    "expo-task-manager": "~11.7.3"
+    "expo-task-manager": "~11.7.3",
+    "expo-background-fetch": "~11.8.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

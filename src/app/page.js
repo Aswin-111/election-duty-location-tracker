@@ -30,6 +30,7 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
+      try{
       const response = await axios.get("https://www.easybiztechnologies.shop/users");
       console.log("data from ", response);
       if (response.data.users) {
@@ -43,6 +44,14 @@ export default function Home() {
         setCoordinates({lat,long})
         setBtn("All")
       }
+
+    }
+  
+
+    
+    catch(err){
+      console.log(err)
+    }
     })();
     
     setIntervalId = setInterval(() => {
@@ -76,8 +85,11 @@ export default function Home() {
       {/* <Sidebar people={people} onPersonSelect={handlePersonSelect} /> */}
 
       <div className="w-[25vw] h-screen  shadow-2xl shadow-black px-5 flex flex-col items-center border-r-2 border-indigo-600">
-        <div className="text-black font-semibold mt-5">KTracker</div>
+      <div className="flex flex-col items-center">
+      <div className="text-black font-semibold mt-5 text-xl">Geo Tag </div>
 
+      <div className="text-sm font-semibold">Election 2024 (Alappuzha Dist.)</div>
+        </div>
         <input
           placeholder="Search Officers"
           className="w-full  mt-5 py-3 px-4 rounded-md border-2 shadow-xl"  onChange={(e)=>{
@@ -128,11 +140,21 @@ export default function Home() {
                 setCoordinates({lat,long})
               }
             }>
-            <div className="flex flex-col">
-              <span>{data.officername}</span>
+
+            <div className="w-full flex justify-between">
+              <div>
+              <span className="font-semibold ">{data.grouppatrol}</span>
               <div className="flex items-center"><span className="mr-2">Active </span> <div className="w-3 h-3 bg-emerald-500 rounded-full"></div></div>
+
             </div>
            
+           
+           <div className="flex flex-col">
+           <span>{data.officername}</span>
+           <span>{data.phone}</span>
+</div>
+
+           </div>
           </div>
             )
           })}
@@ -148,15 +170,15 @@ export default function Home() {
         allowFullScreen
       ></iframe>
 
-      <div className="w-[25vw] h-[25vh]  bg-slate-100 absolute bottom-0 right-0 shadow-xl px-16 py-5">
+      <div className="w-[25vw] h-[25vh]  bg-slate-300 absolute bottom-0 right-0 shadow-xl px-7 py-5">
   
 
         
 
  
 
-  <h1 className="text-xl font-bold">👮    {userData.officername}</h1>
-        <h1 className="text-lg font-semibold">🚓    {userData.groupname}</h1>
+  <h1 className="text-xl font-bold">🚓    {userData.groupname}</h1>
+        <h1 className="text-lg font-semibold">👮    {userData.officername}</h1>
         <h1 className="text-md font-semibold">📞    {userData.phone}</h1>
         <h1 className="text-md font-semibold">📅    {userData.date}</h1>
        

@@ -16,9 +16,8 @@
       "eas": {
         "projectId": "1f467638-00b7-4418-95ae-13080fb2da07"
       }
-    },
-    "android": {
-      "package": "com.aswin5.ktrackerapp"
+    },"android": {
+      "package": "com.aswin5.ktrackerapp" 
     }
   }
 }
