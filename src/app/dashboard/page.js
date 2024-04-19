@@ -15,7 +15,7 @@ export default function Map() {
     if (navigator.geolocation) {
       const userLatLng = { lat: 9.956599, lng: 76.2602788 };
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
+        zoom: 14,
         center: userLatLng,
       });
       setMap(map);
@@ -58,7 +58,7 @@ export default function Map() {
           map,
           label: {
             text: location.name,
-            fontSize: '25px',
+            fontSize: '19px',
             fontWeight: 'bold',
             color : "blue"
           },
