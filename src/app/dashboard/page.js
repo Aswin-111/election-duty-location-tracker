@@ -15,7 +15,7 @@ export default function Map() {
     if (navigator.geolocation) {
       const userLatLng = { lat: 9.956599, lng: 76.2602788 };
       const map = new window.google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
+        zoom: 16 - 1,
         center: userLatLng,
       });
       setMap(map);
@@ -60,7 +60,7 @@ export default function Map() {
             text: location.name,
             fontSize: '19px',
             fontWeight: 'bold',
-            color : "blue"
+            color : "black"
           },
         });
         setMarkers((prevMarkers) => [...prevMarkers, marker]);
@@ -196,6 +196,20 @@ export default function Map() {
         </div>
       </div>
       <div id="map" className="w-[75vw] h-screen" />
+      <div className="w-[16vw] h-[25vh]  bg-slate-300 absolute bottom-0 left-[25vw] shadow-xl px-7 py-5 rounded-lg">
+  
+
+        
+
+ 
+
+  <h1 className="text-xl font-bold">🚓    Group Patrol 2</h1>
+        <h1 className="text-lg font-semibold">👮    Vinod kumar</h1>
+        <h1 className="text-md font-semibold">📞    9847049701</h1>
+        <h1 className="text-md font-semibold">📅    20-04-2024</h1>
+       
+        <h1 className="text-md font-semibold">⌛   {new Date().getHours()} : {new Date().getMinutes()}</h1>
+      </div>
     </div>
   );
 }
