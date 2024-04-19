@@ -33,15 +33,15 @@ export default function Map() {
 
       // Add circle markers to map
       const locations = [
-        { lat: 9.95694, lng: 76.25354, name: "Ernakulam Shiva Temple" },
-        { lat: 9.94901, lng: 76.2678, name: "Fort Kochi Beach" },
-        { lat: 9.95354, lng: 76.26901, name: "Chinese Fishing Nets" },
+        { lat: 9.95694, lng: 76.25354, name: "Booth 1" },
+        { lat: 9.94901, lng: 76.2678, name: "Booth 2" },
+        { lat: 9.95354, lng: 76.26901, name: "Booth 3" },
 
-        { lat: 9.9607, lng: 76.26682, name: "Mattancherry Palace" },
+        { lat: 9.9607, lng: 76.26682, name: "Booth 4" },
         {
           lat: 9.95828,
           lng: 76.26564,
-          name: "Jew Street & Paradesi Synagogue",
+          name: "Booth 5",
         },
       ];
       locations.forEach((location) => {
@@ -55,7 +55,13 @@ export default function Map() {
             strokeColor: "white",
             strokeWeight: 2,
           },
-          map: map,
+          map,
+          label: {
+            text: location.name,
+            fontSize: '25px',
+            fontWeight: 'bold',
+            color : "blue"
+          },
         });
         setMarkers((prevMarkers) => [...prevMarkers, marker]);
       });
