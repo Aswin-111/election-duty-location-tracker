@@ -22,7 +22,7 @@ export default function Map() {
       (async function () {
         try {
           const response = await axios.get(
-            "https://www.easybiztechnologies.shop:5000/users"
+            "https://www.easybiztechnologies.shop/users"
           );
           console.log("data from ", response);
           if (response.data.users) {
@@ -41,7 +41,7 @@ export default function Map() {
       if (navigator.geolocation) {
         setBtn("All");
         const response = await axios.post(
-          "https://www.easybiztechnologies.shop:5000/fetchuserdata",
+          "https://www.easybiztechnologies.shop/fetchuserdata",
           { id }
         );
 
