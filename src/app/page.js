@@ -46,9 +46,8 @@ export default function Map() {
         );
 
         // console.log(response.data.users);
-        console.log(response.data.usersdata);
+        // console.log(response.data.usersdata);
         const locations = response.data.usersdata.map((i) => {
-          console.log(i);
           return {
             id: i.id,
             name: i.name,
