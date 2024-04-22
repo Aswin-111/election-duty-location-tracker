@@ -47,10 +47,11 @@ export default function Map() {
 
         // console.log(response.data.users);
         // console.log(response.data.usersdata);
-        const locations = response.data.usersdata.map((i) => {
+        const locations = response.data.usersdata.map((i,ind) => {
           return {
             id: i.id,
-            name: i.name,
+            
+            name : `booth ${ind + 1}`,
             lat: parseFloat(i.lat.slice(0, 16)),
             lng: parseFloat(i.long.slice(0, 16)),
           };
