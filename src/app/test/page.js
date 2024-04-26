@@ -241,3 +241,26 @@ time
     </div>
   );
 }
+// Your array of objects
+let patrols = [
+  { id: 131, grouppatrol: 'Group Patrol 40', officername: 'Anilkumar B', location: '9.4994016,76.3258601', phone: '9496433455' },
+  { id: 138, grouppatrol: 'Group Patrol 26', officername: 'Manoj U Krishnan', location: '9.6152692,76.3636715', phone: '9447347987' },
+  { id: 139, grouppatrol: 'Group Patrol 37', officername: 'Kabeer C E', location: '9.5759364,76.3487142', phone: '9446346091' },
+  { id: 140, grouppatrol: 'Group Patrol 3', officername: 'Joseph Stanley KJ', location: '9.4996158,76.3259343', phone: '9846851049' },
+  { id: 141, grouppatrol: 'Group Patrol 58', officername: 'Devasia M J', location: '9.4387401,76.4255668', phone: '9744563678' },
+  { id: 142, grouppatrol: 'Group Patrol 22', officername: 'Sali C C', location: '9.6308629,76.3273136', phone: '9544028831' },
+  { id: 143, grouppatrol: 'Group Patrol 31', officername: 'Jomon PA', location: '9.5249167,76.3261283', phone: '9745033834' }
+];
+
+// Custom comparison function to extract the number from the grouppatrol field
+// function compareGroupPatrol(a, b) {
+//   const numA = parseInt(a.grouppatrol.match(/\d+/)[0]); // Extract number from string
+//   const numB = parseInt(b.grouppatrol.match(/\d+/)[0]);
+//   return numA - numB; // Compare numbers
+// }
+
+// // Sort the array using the custom comparison function
+// patrols.sort(compareGroupPatrol);
+
+// // Output the sorted array
+// console.log(patrols);

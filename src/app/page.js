@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios";
-import car from '@/app/car.png'
+import car from "@/app/car.png";
 const CIRCLE_MARKER_SIZE = 8;
 const SQUARE_MARKER_SIZE = 10;
 
@@ -20,7 +20,7 @@ export default function Map() {
 
   const [btn, setBtn] = useState("");
 
-  const [id, setId] = useState(1);
+  const [id, setId] = useState(0);
   // Initialize map when component mounts
   useEffect(() => {
     (async function () {
@@ -31,12 +31,25 @@ export default function Map() {
         console.log("data from ", response);
         if (response.data.users) {
           console.log(response.data.users, "data");
+
+          const patrols = [...response.data.users];
+          function compareGroupPatrol(a, b) {
+            const numA = parseInt(a.grouppatrol.match(/\d+/)[0]); // Extract number from string
+            const numB = parseInt(b.grouppatrol.match(/\d+/)[0]);
+            return numA - numB; // Compare numbers
+          }
+
+          // Sort the array using the custom comparison function
+          patrols.sort(compareGroupPatrol);
+
+          // Output the sorted array
+          console.log(patrols);
           setSquadData({
-            inactive: [...response.data.users],
-            squad: [...response.data.users],
-            fil: [...response.data.users],
+            inactive: [...patrols],
+            squad: [...patrols],
+            fil: [...patrols],
           });
-          setUserFetch(response.data.users[0]);
+          setUserFetch(patrols[0]);
         }
       } catch (err) {
         console.log(err);
@@ -47,41 +60,69 @@ export default function Map() {
     (async function () {
       if (navigator.geolocation) {
         setBtn("All");
+
+        let userdetails;
+
+        let userlocationdetails;
+        let latlong;
+
+        if (!id) {
+          const resp = await axios.get(
+            "https://www.easybiztechnologies.shop/users"
+          );
+
+          const userslist = [...resp.data.users];
+          function compareGroupPatrol(a, b) {
+            const numA = parseInt(a.grouppatrol.match(/\d+/)[0]); // Extract number from string
+            const numB = parseInt(b.grouppatrol.match(/\d+/)[0]);
+            return numA - numB; // Compare numbers
+          }
+
+          // Sort the array using the custom comparison function
+          userslist.sort(compareGroupPatrol);
+
+          // Output the sorted array
+          console.log(userslist);
+          userdetails = userslist[0];
+
+          userlocationdetails = userslist;
+          latlong = userslist[0].location.split(",");
+        } else {
+          const resp = await axios.get(
+            "https://www.easybiztechnologies.shop/users"
+          );
+
+          const userslist = [...resp.data.users];
+          function compareGroupPatrol(a, b) {
+            const numA = parseInt(a.grouppatrol.match(/\d+/)[0]); // Extract number from string
+            const numB = parseInt(b.grouppatrol.match(/\d+/)[0]);
+            return numA - numB; // Compare numbers
+          }
+
+          // Sort the array using the custom comparison function
+          userslist.sort(compareGroupPatrol);
+          latlong = userslist[0].location.split(",");
+        }
+
+        //  console.log(fetchoneid,id?id:fetchoneid,"id test");
         const response = await axios.post(
           "https://www.easybiztechnologies.shop/fetchuserdata",
-          { id }
-        );
-       
-          // try {
-          //   const userresponse = await axios.get(
-          //     "https://www.easybiztechnologies.shop/users"
-          //   );
-          //   console.log("data from ", response);
-          //   if (response.data.users) {
-          //     console.log(response.data.users, "data");
-          //     setSquadData({
-          //       inactive: [...response.data.users],
-          //       squad: [...response.data.users],
-          //       fil: [...response.data.users],
-          //     });
-          //     setUserFetch(response.data.users[0]);
-          //   }
-          // } catch (err) {
-          //   console.log(err);
-          // }
 
-        // console.log(response.data.users);
-        console.log(response.data.usersdata,'data to');
+          { id: id ? id : userdetails.id }
+        );
+
+        // const resp = await axios.post("https://www.easybiztechnologies.shop/query", { query :   `SELECT * FROM users WHERE id = ${fetchid}` })
+
         const locations = response.data.usersdata.map((i, ind) => {
           return {
             id: i.id,
 
-            name: `booth ${ind + 1}`,
+            name: `${i.name}`,
             lat: parseFloat(i.lat.slice(0, 16)),
             lng: parseFloat(i.long.slice(0, 16)),
           };
         });
-        const latlong = response.data.users[0].location.split(",");
+
         console.log(
           parseFloat(latlong[0].slice(0, 7)),
           parseFloat(latlong[1].slice(0, 7))
@@ -107,20 +148,6 @@ export default function Map() {
         });
         setUserLocation(userMarker);
 
-        // Add circle markers to map
-
-        // const locations = [
-        //   { lat: 9.95694, lng: 76.25354, name: "Booth 1" },
-        //   { lat: 9.94901, lng: 76.2678, name: "Booth 2" },
-        //   { lat: 9.95354, lng: 76.26901, name: "Booth 3" },
-
-        //   { lat: 9.9607, lng: 76.26682, name: "Booth 4" },
-        //   {
-        //     lat: 9.95828,
-        //     lng: 76.26564,
-        //     name: "Booth 5",
-        //   },
-        // ];
         locations.forEach((location) => {
           const marker = new window.google.maps.Marker({
             position: location,
@@ -175,12 +202,24 @@ export default function Map() {
         );
         console.log("data from ", response);
         if (response.data.users) {
-          console.log(response.data.users, "data");
+          const patrols = [...response.data.users];
+          function compareGroupPatrol(a, b) {
+            const numA = parseInt(a.grouppatrol.match(/\d+/)[0]); // Extract number from string
+            const numB = parseInt(b.grouppatrol.match(/\d+/)[0]);
+            return numA - numB; // Compare numbers
+          }
+
+          // Sort the array using the custom comparison function
+          patrols.sort(compareGroupPatrol);
+
+          // Output the sorted array
+          console.log(patrols);
           setSquadData({
-            inactive: [...response.data.users],
-            squad: [...response.data.users],
-            fil: [...response.data.users],
+            inactive: [...patrols],
+            squad: [...patrols],
+            fil: [...patrols],
           });
+          setUserFetch(patrols[0]);
         }
       } catch (err) {
         console.log(err);
@@ -256,20 +295,22 @@ export default function Map() {
               }`}
               onClick={() => {
                 setBtn("Active");
-              
+
                 const inactive = squadData.squad.filter((i, ind) => {
                   const moment = require("moment");
                   const currentHoursMinutes = moment().format("HH:mm");
                   const specificTimeString = i.time;
-                  const diffInMinutes = moment.duration(
-                    moment(specificTimeString, "HH:mm").diff(
-                      moment(currentHoursMinutes, "HH:mm")
+                  const diffInMinutes = moment
+                    .duration(
+                      moment(specificTimeString, "HH:mm").diff(
+                        moment(currentHoursMinutes, "HH:mm")
+                      )
                     )
-                  ).asMinutes();
-              
+                    .asMinutes();
+
                   const diffInHours = Math.floor(diffInMinutes / 60);
                   const diffInRemainingMinutes = Math.round(diffInMinutes % 60);
-              
+
                   console.log(
                     `The remaining time is ${diffInHours} hour${
                       diffInHours !== 1 ? "s" : ""
@@ -277,10 +318,10 @@ export default function Map() {
                       diffInRemainingMinutes !== 1 ? "s" : ""
                     }.`
                   );
-              
+
                   return diffInMinutes <= 120;
                 });
-              
+
                 setSquadData({
                   squad: inactive,
                   fil: squadData.fil,
@@ -298,20 +339,22 @@ export default function Map() {
               }`}
               onClick={() => {
                 setBtn("Inactive");
-              
+
                 const inactive = squadData.squad.filter((i, ind) => {
                   const moment = require("moment");
                   const currentHoursMinutes = moment().format("HH:mm");
                   const specificTimeString = i.time;
-                  const diffInMinutes = moment.duration(
-                    moment(specificTimeString, "HH:mm").diff(
-                      moment(currentHoursMinutes, "HH:mm")
+                  const diffInMinutes = moment
+                    .duration(
+                      moment(specificTimeString, "HH:mm").diff(
+                        moment(currentHoursMinutes, "HH:mm")
+                      )
                     )
-                  ).asMinutes();
-              
+                    .asMinutes();
+
                   const diffInHours = Math.floor(diffInMinutes / 60);
                   const diffInRemainingMinutes = Math.round(diffInMinutes % 60);
-              
+
                   console.log(
                     `The remaining time is ${diffInHours} hour${
                       diffInHours !== 1 ? "s" : ""
@@ -319,17 +362,16 @@ export default function Map() {
                       diffInRemainingMinutes !== 1 ? "s" : ""
                     }.`
                   );
-              
+
                   return diffInMinutes > 120;
                 });
-              
+
                 setSquadData({
                   squad: inactive,
                   fil: squadData.fil,
                   inactive: squadData.inactive,
                 });
               }}
-              
             >
               Inactive
             </button>
@@ -341,34 +383,6 @@ export default function Map() {
                   key={index}
                   className="w-full flex justify-between bg-slate-300  px-7 py-2 rounded-lg mt-2"
                   onClick={() => {
-                    //     (async () => {
-                    //                 //  fix here the setCoord must update the array in action rerender the map with the clicked user's lat and longs
-                    //       const response = await axios.post("http://localhost:5000/fetchuserdata",{id:data.id})
-                    //     console.log(response)
-                    //     setSquadData({squad:[...squadData.squad,response.data.users],fil:[...squadData.fil,response.data.users]});
-                    //     setCoords([...response.data.usersdata]);
-
-                    //     // Redraw the polygon with the new coordinates
-                    //     const polygonCoordinates = response.data.usersdata.map(coord => ({
-                    //       lat: parseFloat(coord.lat),
-                    //       lng: parseFloat(coord.lng),
-                    //     }));
-                    //     const newPolygon = new window.google.maps.Polygon({
-                    //       paths: polygonCoordinates,
-                    //       strokeColor: "#FF0000",
-                    //       strokeOpacity: 0.8,
-                    //       strokeWeight: 2,
-                    //       fillColor: "#FF0000",
-                    //       fillOpacity: 0.35,
-                    //       map: map,
-                    //     });
-                    //     setPolygon(newPolygon);
-
-                    //     // Pan to the first marked location when a user is clicked
-                    //     map.panTo(response.data.usersdata[0]);
-                    //   }
-                    // )()
-
                     (async () => {
                       setId(data.id);
 
@@ -412,7 +426,9 @@ time
 : 
 "16:11" */}
                   <div>
-                    <span className="font-semibold text-sm">{data.grouppatrol}</span>
+                    <span className="font-semibold text-sm">
+                      {data.grouppatrol}
+                    </span>
                     <div className="flex items-center">
                       <span className="mr-2">Active </span>{" "}
                       <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
