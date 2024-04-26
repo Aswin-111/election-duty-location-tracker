@@ -7,6 +7,7 @@ const CIRCLE_MARKER_SIZE = 8;
 const SQUARE_MARKER_SIZE = 10;
 
 export default function Map() {
+  const [userAddress,setUserAddress] = useState()
   const [userfetchdata, setUserFetch] = useState({});
   const [map, setMap] = useState(null);
   const [userLocation, setUserLocation] = useState(null);
@@ -87,6 +88,19 @@ export default function Map() {
 
           userlocationdetails = userslist;
           latlong = userslist[0].location.split(",");
+         axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlong[0]},${latlong[1]}&key=AIzaSyCn_LgN1lNiZpNfk5FReAj5CRTwiBo90lQ`)
+  .then(response => {
+   console.log(response,'[[[[[[[[[[')
+    const result = response.data.results[0];
+    const locationName = result.formatted_address;
+    
+
+
+    setUserAddress(locationName)
+  })
+  .catch(error => {
+    console.error(error);
+  });
         } else {
           const resp = await axios.get(
             "https://www.easybiztechnologies.shop/users"
@@ -101,7 +115,37 @@ export default function Map() {
 
           // Sort the array using the custom comparison function
           userslist.sort(compareGroupPatrol);
-          latlong = userslist[0].location.split(",");
+
+
+
+
+
+
+          
+
+
+
+
+          const updated = userslist.filter((i,ind) => i.id === id)
+
+          console.log(userslist,"useer",updated);
+
+
+          latlong = updated[0].location.split(",");
+          console.log(latlong)
+          axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latlong[1]},${latlong[0]}&key=AIzaSyCn_LgN1lNiZpNfk5FReAj5CRTwiBo90lQ`)
+          .then(response => {
+           console.log(response)
+            const result = response.data.results[0];
+            const locationName = result.formatted_address;
+            
+        
+        console.log(locationName,response)
+            setUserAddress(locationName)
+          })
+          .catch(error => {
+            console.error(error);
+          });
         }
 
         //  console.log(fetchoneid,id?id:fetchoneid,"id test");
@@ -219,7 +263,7 @@ export default function Map() {
             squad: [...patrols],
             fil: [...patrols],
           });
-          setUserFetch(patrols[0]);
+         
         }
       } catch (err) {
         console.log(err);
@@ -260,7 +304,7 @@ export default function Map() {
               const searchData = squadData.fil.filter((i, ind) => {
                 return i.grouppatrol
                   .toLowerCase()
-                  .includes(e.target.value.toLowerCase());
+                  .startsWith(e.target.value.toLowerCase());
               });
               setSquadData({
                 squad: searchData,
@@ -447,7 +491,7 @@ time
       </div>
       <div id="map" className="w-[78vw] h-screen" />
 
-      <div className="w-[16vw] h-[22vh]  bg-slate-300 absolute bottom-0 left-[22vw] shadow-xl px-7 py-5 rounded-lg">
+      <div className="w-[23vw] h-[40vh]  bg-slate-300 absolute bottom-0 left-[22vw] shadow-xl px-7 py-5 rounded-lg">
         <h1 className="text-xl font-bold">🚓 {userfetchdata.grouppatrol}</h1>
         <h1 className="text-lg font-semibold">
           👮 {userfetchdata.officername}
@@ -456,6 +500,8 @@ time
         <h1 className="text-md font-semibold">📅 {userfetchdata.date}</h1>
 
         <h1 className="text-md font-semibold">⌛ {userfetchdata.time}</h1>
+        <h1 className="text-md font-semibold">📌 {userAddress}</h1>
+      
       </div>
     </div>
   );
